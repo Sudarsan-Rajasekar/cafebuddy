@@ -18,10 +18,3 @@ app.get("/getMenu", async (req, res) => {
 app.listen(PORT, () => {
   console.log(`✅ Café Buddy running at http://localhost:${PORT}`);
 });
-
- 
-  app
-).listen(3000, () => {
-  console.log("HTTPS server running on https://192.168.10.101:3000");
-
-});
