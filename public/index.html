@@ -2,44 +2,74 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Café Buddy</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Café Buddy</title>
 
+  <!-- Google Font -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 
   <style>
     :root {
       --coffee-dark: #2a1e17;
+      --coffee-medium: #6f4e37;
       --coffee-light: #c8b6a6;
       --cream: #f6f1eb;
     }
 
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
     body {
+      font-family: 'Inter', sans-serif;
+      /* background: linear-gradient(135deg, var(--cream), #c8b6a6); */
       background: var(--cream);
-      font-family: Inter, sans-serif;
+      color: var(--cream);
+      min-height: 100vh;
       display: flex;
-      height: 100vh;
       align-items: center;
       justify-content: center;
     }
 
     .container {
-      background: var(--coffee-light);
+      max-width: 520px;
+      width: 100%;
       padding: 32px;
+      /* background: rgba(255, 255, 255, 0.05); */
+      background: var(--coffee-light);
       border-radius: 16px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.45);
+      backdrop-filter: blur(12px);
       text-align: center;
-      box-shadow: 0 20px 40px rgba(0,0,0,.45);
     }
 
-    button {
-      margin-top: 12px;
-      padding: 12px 26px;
-      border-radius: 12px;
-      border: none;
-      background: var(--coffee-dark);
-      color: var(--cream);
-      cursor: pointer;
+    h1 {
+      font-size: 28px;
+      font-weight: 600;
+      color: var(--coffee-dark);
+      margin-bottom: 12px;
+    }
+
+    p {
       font-size: 15px;
+      color: var(--coffee-dark);
+      margin-bottom: 18px;
+    }
+
+    .widget-box {
+      margin-top: 16px;
+      padding: 20px;
+      border-radius: 14px;
+      background: rgba(0, 0, 0, 0.25);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    footer {
+      margin-top: 24px;
+      font-size: 12px;
+      color: var(--coffee-medium);
     }
   </style>
 </head>
@@ -48,15 +78,23 @@
   <div class="container">
     <h1>☕ Café Buddy</h1>
     <p>Up for a quick coffee?</p>
-    <button id="talkButton">🎧 Talk to Café Buddy</button>
+    <!-- <button id="talkButton" style="  margin-top: 2px;
+      padding: 10px 24px;
+      font-size: 15px;
+      border-radius: 12px;
+      border: none;
+      background: var(--coffee-dark);
+      color: var(--cream);
+      cursor: pointer;">
+    🎧 Talk to Café Buddy
+    </button> -->
   </div>
-
-  <!-- ✅ REQUIRED ElevenLabs ConvAI Web SDK -->
-<script src="https://unpkg.com/@elevenlabs/convai-web-sdk@0.3.2/dist/index.umd.js"></script>
-
-
-  <script type="module" src="agent.js"></script>
-  
+  <elevenlabs-convai
+  id="elWidget"
+  agent-id="agent_5201kbhzkrtrehe98cpj3xypje8b"
+  ></elevenlabs-convai>
+  <script src="https://unpkg.com/@elevenlabs/convai-widget-embed@beta"></script>
 
 </body>
+<script type="module" src="./agent.js"></script>
 </html>
