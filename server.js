@@ -220,7 +220,7 @@ app.get("/getPrice/:item", async (req, res) => {
 
 app.post("/webhook/order", async(req,res)=>{
   try{
-    console.log("Incoming order:", req.body.analysis.data_collection_results);
+    console.log("Incoming order:", req.body);
     const{item, price} = req.body
 
     if (!item || !price) {
@@ -244,5 +244,6 @@ app.listen(PORT, () => {
   console.log(`✅ Café Buddy running at http://localhost:${PORT}`);
 });
  
+
 
 
