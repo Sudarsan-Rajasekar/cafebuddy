@@ -1,14 +1,30 @@
 
 import express from "express";
+import bodyParser from "body-parser";
+import pkg from "pg";
+const { Pool } = pkg;
 
 
 
 const app = express();
 const PORT = 3000;
+ 
 
+
+const db_url = 'postgresql://neondb_owner:npg_ktBNxc0rQKj6@ep-dark-cake-a4fc8mmi-pooler.us-east-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require'
+
+// Postgres connection
+const pool = new Pool({
+  connectionString: db_url, 
+  ssl: { rejectUnauthorized: false }
+});
 
 // serve front end 
 app.use(express.static("public"))
+app.use(express.json())
+app.use(bodyParser.urlencoded({extended:true}))
+
+
 
 const MENU_AND_FAQ_TEXT = `
 ☕ CAFÉ BUDDY MENU (DESCRIPTIONS ONLY)
@@ -202,6 +218,27 @@ app.get("/getPrice/:item", async (req, res) => {
   }
 })
 
+app.post("/webhook/order", async(req,res)=>{
+  try{
+    console.log("Incoming order:", req.body);
+    const{item, price} = req.body
+
+    if (!item || !price) {
+      return res.status(400).json({ error: "Missing item or price" });
+    }
+
+    await pool.query(
+          `INSERT INTO CaffeBuddyOrders (item_name, price) VALUES ($1, $2)`,
+          [item, price]
+        );
+
+    return res.json({ success: true, message: "Order saved" ,data:req.body});
+    
+  }catch(err){
+    console.error("Order save failed:", err.message);
+    return res.status(500).json({ error: "Failed to save order" });
+  }
+})
 
 app.listen(PORT, () => {
   console.log(`✅ Café Buddy running at http://localhost:${PORT}`);
